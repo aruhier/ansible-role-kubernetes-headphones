@@ -1,0 +1,34 @@
+---
+
+kubernetes_headphones_image: "linuxserver/headphones:latest"
+
+kubernetes_headphones_namespace: "default"
+kubernetes_headphones_deployment: "headphones-deployment"
+kubernetes_headphones_app: "headphones"
+kubernetes_headphones_service: "headphones"
+
+kubernetes_headphones_node_selector: {}
+kubernetes_headphones_replicas: 1
+kubernetes_headphones_revision_history: 1
+
+kubernetes_headphones_resources:
+  limits:
+    memory: "756Mi"
+  requests:
+    memory: "256Mi"
+
+kubernetes_headphones_downloads_volumes: {}
+kubernetes_headphones_music_volumes: {}
+kubernetes_headphones_watchdirs_volumes: {}
+
+kubernetes_headphones_config_volume:
+  definition:
+
+kubernetes_headphones_setup_ingress: false
+kubernetes_headphones_ingress:
+  name: "headphones-ingress"
+  host: "headphones.example.com"
+  annotations:
+  tls:
+
+# vim: set ts=2 sw=2:

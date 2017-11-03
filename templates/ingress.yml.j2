@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ kubernetes_headphones_ingress.name }}
+{% if kubernetes_headphones_ingress.annotations %}
+  annotations:
+    {{ kubernetes_headphones_ingress.annotations | to_nice_yaml | indent }}
+{% endif %}
+spec:
+{% if kubernetes_headphones_ingress.tls %}
+  tls:
+    {{ kubernetes_headphones_ingress.tls | to_nice_yaml | indent }}
+{% endif %}
+  rules:
+  - host: {{ kubernetes_headphones_ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ kubernetes_headphones_service }}
+          servicePort: 80

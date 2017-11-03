@@ -1,0 +1,65 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ kubernetes_headphones_deployment }}
+  labels:
+    app: {{ kubernetes_headphones_app }}
+spec:
+  replicas: {{ kubernetes_headphones_replicas }}
+  revisionHistoryLimit: {{ kubernetes_headphones_revision_history }}
+  selector:
+    matchLabels:
+      app: {{ kubernetes_headphones_app }}
+  template:
+    metadata:
+      labels:
+        app: {{ kubernetes_headphones_app }}
+    spec:
+      containers:
+      - image: {{ kubernetes_headphones_image }}
+        imagePullPolicy: Always
+        name: headphones
+        resources:
+          {{ kubernetes_headphones_resources | to_yaml | indent(10) }}
+        ports:
+        - containerPort: 8181
+        volumeMounts:
+        - mountPath: /config
+          name: headphones-config
+          {% if kubernetes_headphones_config_volume.subPath is defined %}subPath: {{ kubernetes_headphones_config_volume.subPath }}{% endif %}
+
+{% for k, v in kubernetes_headphones_downloads_volumes.items() %}
+        - mountPath: /downloads/{{ k }}
+          name: headphones-downloads-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_headphones_music_volumes.items() %}
+        - mountPath: /music/{{ k }}
+          name: headphones-music-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_headphones_watchdirs_volumes.items() %}
+        - mountPath: /watchdirs/{{ k }}
+          name: headphones-watchdirs-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% if kubernetes_headphones_node_selector|default({}) %}
+      nodeSelector:
+        {{ kubernetes_headphones_node_selector | to_yaml | indent(8) }}
+{% endif %}
+      volumes:
+      - {name: headphones-config, {{ kubernetes_headphones_config_volume.definition | to_yaml }}}
+{% for k, v in kubernetes_headphones_downloads_volumes.items() %}
+      - {name: headphones-downloads-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_headphones_music_volumes.items() %}
+      - {name: headphones-music-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_headphones_watchdirs_volumes.items() %}
+      - {name: headphones-watchdirs-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+      restartPolicy: Always
+status: {}

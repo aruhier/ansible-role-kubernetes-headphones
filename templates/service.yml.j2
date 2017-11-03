@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ kubernetes_headphones_service }}
+spec:
+  selector:
+    app: {{ kubernetes_headphones_app }}
+  ports:
+    - port: 80
+      targetPort: 8181
