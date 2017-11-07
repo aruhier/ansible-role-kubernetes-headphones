@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ kubernetes_headphones_ingress.name }}
+  namespace: {{ kubernetes_headphones_namespace }}
 {% if kubernetes_headphones_ingress.annotations %}
   annotations:
     {{ kubernetes_headphones_ingress.annotations | to_nice_yaml | indent }}

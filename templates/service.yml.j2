@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ kubernetes_headphones_service }}
+  namespace: {{ kubernetes_headphones_namespace }}
 spec:
   selector:
     app: {{ kubernetes_headphones_app }}

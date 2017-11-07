@@ -2,6 +2,7 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: {{ kubernetes_headphones_deployment }}
+  namespace: {{ kubernetes_headphones_namespace }}
   labels:
     app: {{ kubernetes_headphones_app }}
 spec:
