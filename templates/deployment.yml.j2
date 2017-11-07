@@ -5,6 +5,13 @@ metadata:
   namespace: {{ kubernetes_headphones_namespace }}
   labels:
     app: {{ kubernetes_headphones_app }}
+{% if kubernetes_headphones_deployment_labels %}
+    {{ kubernetes_headphones_deployment_labels | to_nice_yaml | indent(4) }}
+{% endif %}
+{% if kubernetes_headphones_deployment_annotations %}
+  annotations:
+    {{ kubernetes_headphones_deployment_annotations | to_nice_yaml | indent(4) }}
+{% endif %}
 spec:
   replicas: {{ kubernetes_headphones_replicas }}
   revisionHistoryLimit: {{ kubernetes_headphones_revision_history }}
