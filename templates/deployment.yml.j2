@@ -30,7 +30,18 @@ spec:
         resources:
           {{ kubernetes_headphones_resources | to_yaml | indent(10) }}
         ports:
-        - containerPort: 8181
+        - name: http
+          containerPort: 8181
+        readinessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 90
+          periodSeconds: 10
         volumeMounts:
         - mountPath: /config
           name: headphones-config
