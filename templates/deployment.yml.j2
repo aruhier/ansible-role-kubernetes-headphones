@@ -15,6 +15,8 @@ metadata:
 spec:
   replicas: {{ kubernetes_headphones_replicas }}
   revisionHistoryLimit: {{ kubernetes_headphones_revision_history }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ kubernetes_headphones_app }}
