@@ -1,6 +1,6 @@
 ---
 
-kubernetes_headphones_image: "linuxserver/headphones:latest"
+kubernetes_headphones_image: "lscr.io/linuxserver/headphones:latest"
 
 kubernetes_headphones_namespace: "default"
 kubernetes_headphones_deployment: "headphones-deployment"
